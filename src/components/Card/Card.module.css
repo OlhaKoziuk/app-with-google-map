@@ -1,0 +1,35 @@
+.adCard {
+  width: 90%;
+  border: 1px solid rgb(31, 27, 27);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.adImage {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.adTitle {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.adDescription {
+  font-size: 14px;
+  color: #666;
+}
+
+.adButton {
+  padding: 8px 16px;
+  background: #d5dee9;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.adButton:hover {
+  background: #7faee7;
+}
