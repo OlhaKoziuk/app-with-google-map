@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./Form.module.css";
 
 export const Form = ({ onSubmit, ads, onClose }) => {
-  console.log(ads);
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");

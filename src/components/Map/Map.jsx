@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState } from 'react';
+import React, {useCallback, useEffect, useMemo, useState } from 'react';
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import styles from './Map.module.css';
 import { Theme } from './Theme';
@@ -17,9 +17,12 @@ const options = {
 export const Map = ({ center }) => {
   const [selectedAd, setSelectedAd] = useState(null);
   const [ads, setAds] = useState(adList);
-  const [dynamicAds, setDynamicAds] = useState([]);
+  const [dynamicAds, setDynamicAds] = useState(ads);
   const mapRef = React.useRef(null);
-
+  useEffect(() => {
+    setDynamicAds(ads);
+  }, [ads]);
+   
   const onBoundsChanged = useCallback(() => {
     const bounds = mapRef.current.getBounds();
     const adsInBounds = ads.filter((ad) => {
@@ -29,8 +32,10 @@ export const Map = ({ center }) => {
       );
       return bounds.contains(adPosition);
     });
+
     setDynamicAds(adsInBounds);
   }, [mapRef, ads]);
+
 
   const visibleAds = useMemo(() => {
     if (!selectedAd) {
@@ -55,7 +60,7 @@ export const Map = ({ center }) => {
   }, []);
 
   const handleFormSubmit = (newAd) => {
-     setAds((prevAds) => [...prevAds, newAd]);
+    setAds((prevAds) => [...prevAds, newAd]);
   };
 
   return (
