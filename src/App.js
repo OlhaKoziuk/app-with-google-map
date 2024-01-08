@@ -9,13 +9,10 @@ const center = {
   lng: 35.0668,
 };
 
-const libraries = ['places'];
-
 function App() {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: API_KEY,
-    libraries,
   });
 
   return (

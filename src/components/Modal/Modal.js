@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Modal.module.css';
 import { Form } from '../Form';
 
-export const Modal = ({ isOpen, onClose, advs, onSubmit }) => {
+export const Modal = ({ isOpen, onClose, ads, onSubmit }) => {
   if (!isOpen) {
     return null;
   }
@@ -13,7 +13,7 @@ export const Modal = ({ isOpen, onClose, advs, onSubmit }) => {
         <button className={styles.closeButton} onClick={onClose}>
           &times;
         </button>
-        <Form onSubmit={onSubmit} advs={advs} onClose={onClose} />
+        <Form onSubmit={onSubmit} ads={ads} onClose={onClose} />
       </div>
     </div>
   );

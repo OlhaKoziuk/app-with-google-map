@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styles from "./Form.module.css";
 
-export const Form = ({ onSubmit, advs, onClose }) => {
+export const Form = ({ onSubmit, ads, onClose }) => {
+  console.log(ads);
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
@@ -10,12 +11,12 @@ export const Form = ({ onSubmit, advs, onClose }) => {
     e.preventDefault();
 
     const newAd = {
-      id: Math.max(...advs.map((ad) => ad.id), 0) + 1,
+      id: Math.max(...ads.map((ad) => ad.id), 0) + 1,
       position,
       image,
       title,
     };
-
+    
     onSubmit(newAd);
 
     setPosition({ lat: 0, lng: 0 });

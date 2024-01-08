@@ -17,46 +17,46 @@ const options = {
 export const Map = ({ center }) => {
   const [selectedAd, setSelectedAd] = useState(null);
   const [ads, setAds] = useState(adList);
+  const [dynamicAds, setDynamicAds] = useState([]);
   const mapRef = React.useRef(null);
 
- const onBoundsChanged = useCallback(() => {
-   const bounds = mapRef.current.getBounds();
-   const adsInBounds = ads.filter((ad) => {
-     const adPosition = new window.google.maps.LatLng(
-       ad.position.lat,
-       ad.position.lng
-     );
-     return bounds.contains(adPosition);
-   });
-    setAds(adsInBounds);
-  //  setAds((prevAds) => [...prevAds, adsInBounds]);
- }, [mapRef, ads]);
+  const onBoundsChanged = useCallback(() => {
+    const bounds = mapRef.current.getBounds();
+    const adsInBounds = ads.filter((ad) => {
+      const adPosition = new window.google.maps.LatLng(
+        ad.position.lat,
+        ad.position.lng
+      );
+      return bounds.contains(adPosition);
+    });
+    setDynamicAds(adsInBounds);
+  }, [mapRef, ads]);
 
- const visibleAds = useMemo(() => {
-   if (!selectedAd) {
-     return ads;
-   }
+  const visibleAds = useMemo(() => {
+    if (!selectedAd) {
+      return dynamicAds;
+    }
 
-   const updatedList = adList.filter((ad) => ad.id === selectedAd.id);
-   return updatedList;
- }, [selectedAd, ads]);
+    const updatedList = ads.filter((ad) => ad.id === selectedAd.id);
+    return updatedList;
+  }, [selectedAd, dynamicAds, ads]);
 
-  const onLoad = React.useCallback(
-    (map) => {
-      mapRef.current = map;
-       
-      map.addListener("bounds_changed", onBoundsChanged);
-    },
-    [onBoundsChanged]
-  );
+   const onLoad = React.useCallback(
+     (map) => {
+       mapRef.current = map;
+
+       map.addListener("bounds_changed", onBoundsChanged);
+     },
+     [onBoundsChanged]
+   );
 
   const onUnmount = React.useCallback(function callback(map) {
     mapRef.current = null;
   }, []);
 
-   const handleFormSubmit = (newAd) => {
+  const handleFormSubmit = (newAd) => {
      setAds((prevAds) => [...prevAds, newAd]);
-   };
+  };
 
   return (
     <div className={styles.container}>
@@ -68,19 +68,21 @@ export const Map = ({ center }) => {
         onUnmount={onUnmount}
         options={options}
       >
-        {visibleAds.map((ad) => (
-          <Marker
-            key={ad.id}
-            position={ad.position}
-            onClick={() => {
-              setSelectedAd(ad);
-            }}
-          />
-        ))}
-        {/* <Marker position={center} /> */}
+        {visibleAds.map((ad) => {
+          return (
+            <Marker
+              key={ad.id}
+              position={ad.position}
+              onClick={() => {
+                setSelectedAd(ad);
+              }}
+            />
+          );
+        })}
       </GoogleMap>
       <CardList
         advs={visibleAds}
+        ads={ads}
         selectedAd={selectedAd}
         onSubmit={handleFormSubmit}
       />
