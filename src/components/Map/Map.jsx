@@ -6,7 +6,7 @@ import { adList } from '../../advs';
 import { CardList } from '../CardList/CardList';
 
 const containerStyle = {
-  width: "78%",
+  width: window.innerWidth <= 900 ? "100%" : "78%",
   height: "100%",
 };
 
@@ -21,15 +21,16 @@ export const Map = ({ center }) => {
 
  const onBoundsChanged = useCallback(() => {
    const bounds = mapRef.current.getBounds();
-   const adsInBounds = adList.filter((ad) => {
+   const adsInBounds = ads.filter((ad) => {
      const adPosition = new window.google.maps.LatLng(
        ad.position.lat,
        ad.position.lng
      );
      return bounds.contains(adPosition);
    });
-   setAds(adsInBounds);
- }, [mapRef]);
+    setAds(adsInBounds);
+  //  setAds((prevAds) => [...prevAds, adsInBounds]);
+ }, [mapRef, ads]);
 
  const visibleAds = useMemo(() => {
    if (!selectedAd) {
