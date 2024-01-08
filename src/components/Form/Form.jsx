@@ -26,44 +26,49 @@ export const Form = ({ onSubmit, advs, onClose }) => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <label>
+      <label className={styles.label}>
         Latitude:
         <input
           type="text"
+          className={styles.input}
           value={position.lat}
           onChange={(e) =>
             setPosition({ ...position, lat: Number(e.target.value) })
           }
         />
       </label>
-      <label>
+      <label className={styles.label}>
         Longitude:
         <input
           type="text"
+          className={styles.input}
           value={position.lng}
           onChange={(e) =>
             setPosition({ ...position, lng: Number(e.target.value) })
           }
         />
       </label>
-      <label>
+      <label className={styles.label}>
         Image URL:
         <input
           type="text"
+          className={styles.input}
           value={image}
           onChange={(e) => setImage(e.target.value)}
         />
       </label>
-      <label>
+      <label className={styles.label}>
         Title:
         <input
           type="text"
+          className={styles.input}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
       </label>
       <button
         type="submit"
+        className={styles.button}
       >
         Create Advertisement
       </button>
